@@ -1,0 +1,23 @@
+.name,
+.number {
+    font-family: sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.addButton {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+    cursor: pointer;
+    width: 70px;
+    height: 30px;
+    margin-bottom: 10px;
+}
