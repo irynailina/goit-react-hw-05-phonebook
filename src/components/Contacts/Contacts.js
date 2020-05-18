@@ -3,10 +3,9 @@ import Form from "../Form/Form";
 import ContactsList from "../ContactsList/ContactsList";
 import Filter from "../Filter/Filter";
 import styles from "./contacts.module.css";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { CSSTransition } from "react-transition-group";
 import popTransition from "../../transitions/pop.module.css";
-import slideTransition from "../../transitions/slide.module.css";
-import fadeTransition from "../../transitions/fade.module.css";
+import popupTransition from "../../transitions/popup.module.css";
 import "react-notifications/lib/notifications.css";
 import {
   NotificationContainer,
@@ -16,33 +15,15 @@ import {
 class Contacts extends Component {
   state = {
     contacts: [],
-    // contacts: [
-    //   { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
-    //   { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
-    //   { id: "id-3", name: "Eden Clements", number: "645-17-79" },
-    //   { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
-    // ],
     filter: "",
     visible: false,
     isShow: false,
-    // isShow: true
   };
-
-  // componentDidMount() {
-  //   this.setState({
-  //     isShow: !this.state.isShow
-  //   })
-  //   this.filterShow()
-  // }
-
-  // filterShow = () => {
-  //   this.setState(state => ({isShow: !state.isShow}))
-  // }
 
   componentDidMount() {
     this.setState({
       contacts: this.filterContacts(),
-      // isShow: !this.state.isShow
+      isShow: !this.state.isShow,
     });
   }
 
@@ -97,9 +78,7 @@ class Contacts extends Component {
   };
 
   createNotification = () => {
-    // return () => {
     NotificationManager.info("This contact is already exist!");
-    // }
   };
 
   render() {
@@ -112,8 +91,7 @@ class Contacts extends Component {
             <CSSTransition
               in={!isShow}
               timeout={3000}
-              classNames={fadeTransition}
-              unmountOnExit
+              classNames={popTransition}
             >
               <h2 className={styles.title}>Phonebook</h2>
             </CSSTransition>
@@ -122,22 +100,19 @@ class Contacts extends Component {
             <Form getContact={this.getContact} />
           </div>
           <h2 className={styles.contacts}>Contacts</h2>
-          {contacts.length > 1 && (
-            <CSSTransition
-              in={!isShow}
-              timeout={3000}
-              classNames={fadeTransition}
-              unmountOnExit
-            >
-              <Filter value={filter} onChangeFilter={this.handleChangeFilter} />
-            </CSSTransition>
-          )}
+          <CSSTransition
+            in={contacts.length > 1}
+            timeout={250}
+            classNames={popupTransition}
+            unmountOnExit
+          >
+            <Filter value={filter} onChangeFilter={this.handleChangeFilter} />
+          </CSSTransition>
           <ContactsList
             contacts={this.filterContacts()}
             deleteContact={this.deleteContact}
           />
         </div>
-
         {
           <NotificationContainer timeout={500}>
             <button className="btn btn-info"></button>
